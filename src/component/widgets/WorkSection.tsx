@@ -36,7 +36,7 @@ export default function WorkSection() {
 
   return (
     <SectionWrapper>
-      <section className="mt-10  sm:rounded-[40px] overflow-hidden border border-gray-200">
+      <section className="mt-10 bg-white sm:rounded-[40px] shadow-xl overflow-hidden border border-gray-200">
         <div className="px-4 sm:px-6 py-12 text-center max-w-7xl mx-auto">
           <h2 className="text-[30px] sm:text-3xl md:text-4xl font-bold text-gray-800 mb-10">
             Want To See My Work
