@@ -9,9 +9,10 @@ type CaseStudyProps = {
   title: string;
   description: string;
   buttonText: string;
+  className?: string;
 };
 
-export default function CaseStudy({
+const CaseStudy: React.FC<CaseStudyProps> = ({
   imageUrl,
   alt = "Case study image",
   quote,
@@ -20,32 +21,33 @@ export default function CaseStudy({
   title,
   description,
   buttonText,
-}: CaseStudyProps) {
+   className = ""
+}) => {
   return (
-    <div className="bg-gray-100 rounded-[40px] px-4 py-10 sm:px-6 md:px-10 lg:px-16 ">
-      <div className=" grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div className={`bg-zinc-50 rounded-[40px] px-6 py-12 sm:px-8 md:px-12 lg:px-16 shadow-sm w-[1100px] ${className}`}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
         
         {/* LEFT SECTION */}
         <div className="flex flex-col justify-between h-full">
           {/* Quote Box */}
-          <div className="bg-white rounded-xl shadow-md p-5 sm:p-6 md:p-7 max-w-md w-full mx-auto lg:mx-0">
-            <p className="text-gray-900 text-[20px] sm:text-[24px] md:text-[27px] font-perah leading-relaxed font-bold">
+          <div className="bg-white rounded-xl shadow-md p-6 max-w-md w-full mx-auto lg:mx-0">
+            <p className="text-zinc-900 text-[20px] sm:text-[24px] md:text-[27px] font-perah leading-relaxed font-semibold">
               “{quote}”
             </p>
-            <p className="text-gray-500 text-base sm:text-lg mt-4">
+            <p className="text-zinc-600 text-base sm:text-lg mt-4">
               {author}, {role}
             </p>
           </div>
 
           {/* Title, Description, CTA */}
           <div className="mt-8 text-center lg:text-left">
-            <h3 className="text-[24px] sm:text-[28px] md:text-[30px] font-bold font-heading text-gray-800 mb-2">
+            <h3 className="text-zinc-800 text-[24px] sm:text-[28px] md:text-[30px] font-heading mb-2">
               {title}
             </h3>
-            <p className="text-gray-600 text-[18px] sm:text-[20px] md:text-[23px] max-w-lg mx-auto lg:mx-0 mb-6">
+            <p className="text-zinc-600 text-[18px] sm:text-[20px] md:text-[23px] max-w-lg mx-auto lg:mx-0 mb-6 leading-relaxed">
               {description}
             </p>
-            <Button className="rounded-full px-6 py-3 text-base">
+            <Button className="rounded-full px-6 py-3 text-base hover:underline transition-all">
               {buttonText}
             </Button>
           </div>
@@ -56,10 +58,12 @@ export default function CaseStudy({
           <img
             src={imageUrl}
             alt={alt}
-            className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover rounded-xl"
+            className="w-full max-w-[500px] sm:max-w-[600px] md:max-w-[700px] h-[350px] sm:h-[450px] md:h-[550px] object-cover rounded-xl shadow-sm"
           />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default CaseStudy;

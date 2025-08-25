@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 import Button from '../shared/ui/Button';
 import SectionWrapper from '../shared/ui/SectionWrapper';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,9 +16,9 @@ export default function Header() {
             Shayandesigns
           </a>
 
-          {/* Desktop Nav */}
+
           <ul className="hidden md:flex items-center gap-[46px] font-nav text-[18px] lg:text-[25px] text-zinc-900">
-            <li><a href="#" className="hover:text-zinc-900">Home</a></li>
+            <li><Link to={'/'}>Home</Link></li>
             <li><a href="#" className="hover:text-zinc-900">Portfolio</a></li>
             <li><a href="#" className="hover:text-zinc-900">About</a></li>
             <li><a href="#" className="hover:text-zinc-900">Contact</a></li>

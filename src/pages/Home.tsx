@@ -1,22 +1,20 @@
 import React from 'react'
 import Hero from '../component/widgets/Hero'
 import Tags from '../component/shared/ui/Tags'
-import WorkSection from '../component/widgets/WorkSection'
 import AboutSection from '../component/widgets/AboutUs'
+import WorkSection from '../component/widgets/WorkSection'
 import CaseStudySection from '../component/widgets/CaseStudySection'
 
-
-const Home:React.FC = () => {
+const Home: React.FC = () => {
   return (
-   <div>
-    <Hero/>
-    <Tags/>
-    <WorkSection/>
-    <AboutSection/>
-    <CaseStudySection/>
-   </div>
+    <div>
+      <Hero />
+      <Tags />
+      <AboutSection />
+      <WorkSection />
+      <CaseStudySection />
+    </div>
   )
 }
 
 export default Home
-

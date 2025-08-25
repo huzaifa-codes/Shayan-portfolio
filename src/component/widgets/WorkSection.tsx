@@ -30,11 +30,15 @@ export default function WorkSection() {
       ? allProjects
       : allProjects.filter((p) => p.category === activeFilter);
 
+  // Fix animation speed: base time per item is constant based on "All" category duration (40s)
+  const baseTimePerItem = 40 / allProjects.length; // 40s divided by total items (9)
+  const animationDuration = filteredProjects.length * baseTimePerItem;
+
   return (
     <SectionWrapper>
-      <section className="mt-10 bg-white sm:rounded-[40px] shadow-md overflow-hidden">
-        <div className="px-4 sm:px-6 py-10 text-center">
-          <h2 className="text-[30px] sm:text-3xl md:text-4xl font-heading text-gray-800 mb-10">
+      <section className="mt-10  sm:rounded-[40px] overflow-hidden border border-gray-200">
+        <div className="px-4 sm:px-6 py-12 text-center max-w-7xl mx-auto">
+          <h2 className="text-[30px] sm:text-3xl md:text-4xl font-bold text-gray-800 mb-10">
             Want To See My Work
           </h2>
 
@@ -46,11 +50,11 @@ export default function WorkSection() {
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`px-5 py-2 rounded-full font-medium text-base sm:text-lg md:text-xl transition-all
+                  className={`px-5 py-2 rounded-full font-medium text-sm sm:text-base transition-all border
                     ${
                       isActive
-                        ? "bg-indigo-100 text-indigo-900"
-                        : "bg-white text-gray-600 hover:bg-gray-100"
+                        ? "bg-indigo-100 text-indigo-800 border-indigo-300"
+                        : "bg-white text-gray-600 border-gray-300 hover:bg-gray-100"
                     }`}
                 >
                   {filter}
@@ -65,29 +69,29 @@ export default function WorkSection() {
               className="flex gap-6 w-max"
               initial={{ x: "0%" }}
               animate={{ x: "-50%" }}
-              transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+              transition={{ repeat: Infinity, duration: animationDuration, ease: "linear" }}
+              // key helps re-trigger animation on filter change
+              key={activeFilter}
             >
               {[...filteredProjects, ...filteredProjects].map((project, i) => (
                 <div
                   key={i}
-                  className="w-[200px] sm:w-[280px] md:w-[320px] lg:w-[400px]    text-left flex-shrink-0"
+                  className="w-[240px] sm:w-[280px] md:w-[320px] lg:w-[390px] flex-shrink-0"
                 >
-                  <div className="aspect-[5/6] bg-gray-200 rounded-xl mb-2" />
-                  <p className="text-base sm:text-lg md:text-xl font-heading font-bold text-gray-600">
+                  <div className="aspect-[4/4] bg-gray-100 rounded-xl shadow-sm flex items-center justify-center text-gray-400 text-xl font-semibold mb-3">
+                    Preview
+                  </div>
+                  <p className="text-base sm:text-[20px] text-start font-semibold text-gray-700">
                     {project.title}
                   </p>
                 </div>
               ))}
             </motion.div>
-
-            {/* Fade Gradients */}
-            <div className="absolute top-0 left-0 h-full w-10 sm:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-            <div className="absolute top-0 right-0 h-full w-10 sm:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
           </div>
 
           {/* CTA Button */}
           <div className="flex justify-center">
-            <Button className="hover:bg-indigo-200 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-md">
+            <Button className="  text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg transition-all">
               View My Recent Work In Figma
             </Button>
           </div>
