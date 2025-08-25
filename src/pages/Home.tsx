@@ -11,8 +11,8 @@ const Home:React.FC = () => {
    <div>
     <Hero/>
     <Tags/>
-      <AboutSection/>
     <WorkSection/>
+    <AboutSection/>
     <CaseStudySection/>
    </div>
   )

@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
         <div className="grid gap-12 items-center lg:grid-cols-2">
           {/* Text Column */}
           <div className=" lg:text-left">
-            <h1 className="text-zinc-600 -tracking-wide leading-tight sm:leading-[1.2] text-[34px] sm:text-[46px] lg:text-[65px] break-words">
+            <h1 className="text-zinc-600   sm:leading-[1.6] text-[34px] sm:text-[46px] lg:text-[65px] break-words">
               <span>Senior </span>
               <span className="text-zinc-900 font-extrabold">UX Designer</span>
               <br />

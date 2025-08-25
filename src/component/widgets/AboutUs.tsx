@@ -37,7 +37,7 @@ export default function AboutSection() {
 
   return (
     <SectionWrapper>
-      <div className="py-14 px-4  flex flex-col lg:flex-row justify-between gap-10">
+      <div className="py-20 px-4  flex flex-col lg:flex-row justify-between gap-10">
         {/* Left Column */}
         <div className="flex-shrink-0 lg:w-1/3">
           <p className="text-[38px] sm:text-[44px] lg:text-[54px] font-semibold text-zinc-600">
