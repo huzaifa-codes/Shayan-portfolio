@@ -1,146 +1,87 @@
-  import { useState, useEffect, useRef } from "react";
-  import { caseStudies } from "../../data/Casestudy";
-  import Button from "../shared/ui/Button";
-  import CaseStudy from "../shared/ui/CaseStudy";
-  import { motion } from "framer-motion";
-  import { useNavigate } from "react-router-dom";
+import React from "react";
+import ProjectCard from "../shared/ui/CaseStudy";
+import Button from "../shared/ui/Button";
 
-  const VISIBLE_DOTS = 3;
+interface ProjectCardProps {
+  title: string;
+  description: string;
+  imageUrl: string;
+  testimonial: string;
+  author: string;
+  avatarUrl?: string;
+  className?: string;
+  link: string;
+}
 
-  const CaseStudySection: React.FC = () => {
-    const navigate = useNavigate();
-    const [currentPosition, setCurrentPosition] = useState(0);
-    const [cardWidth, setCardWidth] = useState(0);
-    const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-    const [isMobile, setIsMobile] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
+const projects: ProjectCardProps[] = [
+  {
+    title: "Lustra",
+    description:
+      "Fast, elegant, and conversion-focused, it’s built to boost bookings and build trust.",
+    imageUrl:
+      "https://cdn.dribbble.com/userupload/18149760/file/original-2f6ca7db3c49d72b5304be01d797227b.png?format=webp&resize=400x300&vertical=center",
+    link: "/project/lustra",
+    testimonial:
+      "More bookings. Less hassle. The site does its job perfectly and looks great doing it.",
+    author: "Samantha R., CEO",
+    avatarUrl: "/images/avatar.jpg",
+  },
+  {
+    title: "Streamline",
+    description:
+      "Optimize workflows and deliver smooth client experiences with ease.",
+    imageUrl:
+      "https://cdn.dribbble.com/userupload/15399318/file/original-f811860cddde0e16cf2d421fc4d657c3.png?format=webp&resize=400x300&vertical=center",
+    link: "/project/streamline",
+    testimonial:
+      "The clean UI made onboarding a breeze and boosted our sales.",
+    author: "Alex M., Founder",
+    avatarUrl: "/images/avatar2.jpg",
+  },
+  {
+    title: "Pulse",
+    description:
+      "Stay ahead of the curve with modern solutions made for growing teams.",
+    imageUrl:
+      "https://cdn.dribbble.com/userupload/16860421/file/original-15eb54b109d3e915dbeedafeb3fdc15a.png?format=webp&resize=400x300&vertical=center",
+    link: "/project/pulse",
+    testimonial: "It’s professional, reliable, and our customers love it.",
+    author: "Kira T., Manager",
+    avatarUrl: "/images/avatar3.jpg",
+  },
+];
 
-    useEffect(() => {
-      const updateDimensions = () => {
-        const vw = window.innerWidth;
-        setViewportWidth(vw);
+const CaseStudySection: React.FC = () => {
+  return (
+    <div className="relative z-0">
+      {/* ✅ Bottom gradient overlay — starts from bottom and fades gently upward */}
+      <div className="absolute bottom-0 left-0  right-0 h-[1700px] z-[-2] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t rounded-[80px] max-w-[1500px] mx-auto  from-white via-white/0 to-transparent rounded-t-[100px]" />
+      </div>
 
-        // Mobile breakpoint
-        if (vw <= 640) {
-          setIsMobile(true);
-          setCardWidth(vw); // full width on mobile
-        } else {
-          setIsMobile(false);
-          // Fixed card width for desktop (adjust as you like)
-          const maxCardWidth = 1100;
-          setCardWidth(Math.min(maxCardWidth, vw * 0.8));
-        }
-      };
-
-      updateDimensions();
-      window.addEventListener("resize", updateDimensions);
-      return () => window.removeEventListener("resize", updateDimensions);
-    }, []);
-
-    // Calculate x offset for desktop
-    // We want:
-    // pos 0: x = 0 (first card aligned left)
-    // pos 1: x = -(cardWidth/2) + (viewportWidth/2 - cardWidth/2) = -(cardWidth - viewportWidth)/2 to center 2nd card
-    // pos 2: x = -(cardWidth - viewportWidth) so right edge aligns with viewport right edge
-    // For mobile: simple slide by cardWidth * position
-const xPosition = (() => {
-  if (isMobile) {
-    return cardWidth * currentPosition;
-  } else {
-    switch (currentPosition) {
-      case 0:
-        return 0;
-      case 1:
-        return (cardWidth - viewportWidth) / 2;
-      case 2:
-        return cardWidth - viewportWidth;
-      default:
-        return cardWidth * currentPosition;
-    }
-  }
-})();
-
-
-    const handleDotClick = (index: number) => {
-      if (index < 0 || index >= VISIBLE_DOTS) return;
-      setCurrentPosition(index);
-    };
-
-    return (
-      <div className="w-full bg-white py-16">
+      {/* ✅ Main content */}
+      <div className="px-4 pt-32 space-y-20">
         {/* Title */}
-        <div className="flex justify-around max-w-[1360px] mx-auto items-center px-4 sm:px-8">
-          <div className="mb-12">
-            <p className="font-heading text-black text-[26px] sm:text-[32px] leading-relaxed max-w-4xl mx-auto">
-              <span className="text-zinc-600 ">Project</span>
-              <br />
-              Latest Projects
-            </p>
-          </div>
+        <h2 className="text-[36px] text-black font-jakarta sm:text-[44px] lg:text-[48px] font-bold text-center">
+          Some Of My Selected Projects
+        </h2>
 
-          <Button
-            onClick={() => navigate("/Allcasestudy")}
-            className="text-lg sm:text-xl px-8 py-3.5 rounded-full shadow-md transition-all hover:underline"
-          >
+        {/* Project Cards */}
+        <div className="space-y-20">
+          {projects.map((project, index) => (
+            <ProjectCard key={index} {...project} />
+          ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="  flex justify-center">
+          <Button className="px-14 py-3 bg-black text-white mb-10 rounded-full text-[18px]">
             View All
           </Button>
         </div>
-
-        {/* Carousel container */}
-        <div
-          ref={containerRef}
-          className={`relative overflow-hidden mx-auto`}
-          style={{
-            width: "100vw",
-            maxWidth: "100vw",
-            touchAction: "pan-y",
-            paddingLeft: isMobile ? 0 : 0,
-            paddingRight: isMobile ? 0 : 0,
-          }}
-        >
-          <motion.div
-            className="flex gap-5"
-            animate={{ x: xPosition }}
-            transition={{ type: "spring", stiffness: 120, damping: 25 }}
-            style={{ cursor: "grab" }}
-          >
-            {caseStudies.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  minWidth: cardWidth,
-                  flexShrink: 0,
-                  width: cardWidth,
-                  maxWidth: 1100,
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
-                <CaseStudy
-                  {...item}
-                  isMobile={isMobile}
-                  hideText={(!isMobile && index === 2)} 
-                />
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Dots */}
-        <div className="flex justify-center mt-6 space-x-4">
-          {[...Array(VISIBLE_DOTS)].map((_, index) => (
-            <button
-              key={index}
-              className={`w-4 h-4 rounded-full transition-colors ${
-                currentPosition === index ? "bg-blue-600" : "bg-zinc-400"
-              }`}
-              onClick={() => handleDotClick(index)}
-              aria-label={`Go to position ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  export default CaseStudySection;
+export default CaseStudySection;

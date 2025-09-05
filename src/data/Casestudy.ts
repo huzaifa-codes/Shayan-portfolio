@@ -8,7 +8,7 @@ type CaseStudyType = {
   description: string;
   buttonText: string;
 }
-
+  
 
 
 export const caseStudies:CaseStudyType[] = [

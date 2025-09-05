@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Button from "../shared/ui/Button";
-import SectionWrapper from "../shared/ui/SectionWrapper";
 
-const filters = ["All", "Mobile Apps", "Dashboard", "Website"];
+const filters = ["All", "Mobile App", "Website", "Dashboard"];
 
 interface Project {
   title: string;
@@ -11,14 +10,11 @@ interface Project {
 }
 
 const allProjects: Project[] = [
-  { title: "Laundry App", category: "Mobile Apps" },
-  { title: "Food Delivery", category: "Mobile Apps" },
-  { title: "Fitness Tracker", category: "Mobile Apps" },
-  { title: "Community Management", category: "Dashboard" },
-  { title: "Admin Panel", category: "Dashboard" },
-  { title: "Analytics Board", category: "Dashboard" },
+  { title: "Laundry App", category: "Mobile App" },
+  { title: "Health Dashboard", category: "Dashboard" },
   { title: "Portfolio Website", category: "Website" },
-  { title: "Landing Page", category: "Website" },
+  { title: "Laundry App", category: "Mobile App" },
+  { title: "Health Dashboard", category: "Dashboard" },
   { title: "E-commerce Site", category: "Website" },
 ];
 
@@ -30,73 +26,80 @@ export default function WorkSection() {
       ? allProjects
       : allProjects.filter((p) => p.category === activeFilter);
 
-  // Fix animation speed: base time per item is constant based on "All" category duration (40s)
-  const baseTimePerItem = 40 / allProjects.length; // 40s divided by total items (9)
+  const baseTimePerItem = 40 / allProjects.length;
   const animationDuration = filteredProjects.length * baseTimePerItem;
 
   return (
-    <SectionWrapper>
-      <section className="mt-10 bg-white sm:rounded-[40px] shadow-xl overflow-hidden border border-gray-200">
-        <div className="px-4 sm:px-6 py-12 text-center max-w-7xl mx-auto">
-          <h2 className="text-[30px] sm:text-3xl md:text-4xl font-bold text-gray-800 mb-10">
-            Want To See My Work
-          </h2>
+    <section className="relative py-16 mt-20 px-4 max-w-[1500px]  mx-auto ">
+      {/* White gradient from top fading down */}
+      <div className="absolute top-0 left-0 right-0 h-[500px] pointer-events-none -z-10">
+        <div className="w-full h-full bg-gradient-to-b from-white rounded-[80px] via-white/70 to-transparent" />
+      </div>
 
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12">
-            {filters.map((filter) => {
-              const isActive = activeFilter === filter;
+      <div className="max-w-[1600px] mx-auto relative z-10">
+        <h2 className="text-3xl sm:text-[38px]  font-jakarta font-semibold   md:text-[48px]  text-center mb-10">
+          Designs Screens
+        </h2>
+
+        {/* Filters */}
+        <div className="flex justify-center flex-wrap gap-3 mb-14">
+          {filters.map((filter) => {
+            const isActive = activeFilter === filter;
+            return (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium text-sm sm:text-[16px] transition-all border
+                ${
+                  isActive
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-black border-gray-300 hover:bg-gray-100"
+                }`}
+              >
+                {filter}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Auto-scroll Row */}
+        <div className="relative overflow-hidden mb-14">
+          <motion.div
+            className="flex gap-6 w-max"
+            initial={{ x: "0%" }}
+            animate={{ x: "-50%" }}
+            transition={{
+              repeat: Infinity,
+              duration: animationDuration,
+              ease: "linear",
+            }}
+            key={activeFilter}
+          >
+            {[...filteredProjects, ...filteredProjects].map((project, i) => {
+              const isMobile = project.category === "Mobile App";
+              const cardWidth = isMobile
+                ? "w-[160px] sm:w-[200px]"
+                : "w-[240px] sm:w-[300px]";
+
               return (
-                <button
-                  key={filter}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`px-5 py-2 rounded-full font-medium text-sm sm:text-base transition-all border
-                    ${
-                      isActive
-                        ? "bg-indigo-100 text-indigo-800 border-indigo-300"
-                        : "bg-white text-gray-600 border-gray-300 hover:bg-gray-100"
-                    }`}
-                >
-                  {filter}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Marquee Section */}
-          <div className="relative overflow-hidden mb-16">
-            <motion.div
-              className="flex gap-6 w-max"
-              initial={{ x: "0%" }}
-              animate={{ x: "-50%" }}
-              transition={{ repeat: Infinity, duration: animationDuration, ease: "linear" }}
-              // key helps re-trigger animation on filter change
-              key={activeFilter}
-            >
-              {[...filteredProjects, ...filteredProjects].map((project, i) => (
-                <div
-                  key={i}
-                  className="w-[240px] sm:w-[280px] md:w-[320px] lg:w-[390px] flex-shrink-0"
-                >
-                  <div className="aspect-[4/4] bg-gray-100 rounded-xl shadow-sm flex items-center justify-center text-gray-400 text-xl font-semibold mb-3">
-                    Preview
-                  </div>
-                  <p className="text-base sm:text-[20px] text-start font-semibold text-gray-700">
+                <div key={i} className={`${cardWidth} h-[300px] flex-shrink-0`}>
+                  <div className="w-full h-full bg-gray-200 rounded-lg" />
+                  <p className="mt-3 text-sm sm:text-base text-center text-gray-700 font-medium">
                     {project.title}
                   </p>
                 </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="flex justify-center">
-            <Button className="  text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg transition-all">
-              View My Recent Work In Figma
-            </Button>
-          </div>
+              );
+            })}
+          </motion.div>
         </div>
-      </section>
-    </SectionWrapper>
+
+        {/* CTA */}
+        <div className="flex justify-center">
+          <Button className="text-white bg-black px-12 py-3 rounded-full text-lg shadow-md">
+            View All
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 }

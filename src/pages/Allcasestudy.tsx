@@ -1,6 +1,6 @@
 import React from 'react'
 import { caseStudies } from "../data/Casestudy";
-import CaseStudy from "../component/shared/ui/CaseStudy";
+import ProjectCard from '../component/shared/ui/CaseStudy';
 
 
 const  Allcasestudy:React.FC = () => {
@@ -15,7 +15,10 @@ const  Allcasestudy:React.FC = () => {
    
            <div className="flex flex-col gap-20 sm:gap-28">
              {caseStudies.map((item, index) => (
-               <CaseStudy key={index} {...item} className='w-full' />
+               <ProjectCard key={index} {...item}   testimonial={item.quote || "Great project!"} 
+  link={"/"} 
+  avatarUrl={"/default-avatar.png"} 
+  className="w-full"  />
              ))}
            </div>
    

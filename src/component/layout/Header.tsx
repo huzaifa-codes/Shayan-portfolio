@@ -1,54 +1,91 @@
-import { useState } from 'react';
-import { HiMenu, HiX } from 'react-icons/hi';
-import Button from '../shared/ui/Button';
-import SectionWrapper from '../shared/ui/SectionWrapper';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { HiMenu, HiX } from "react-icons/hi";
+import { FaMoon } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import SectionWrapper from "../shared/ui/SectionWrapper";
+import Button from "../shared/ui/Button";
+
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
+
+
+  // Apply dark/light mode class to body
+  useEffect(() => {
+    document.body.className = theme === "dark" ? "dark" : "";
+  }, [theme]);
 
   return (
-    <header className="w-full py-6 px-4">
+    <header className="w-full fixed top-0   py-7 z-20 bg-[#F5F5F0]">
       <SectionWrapper>
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <a className="font-heading text-black font-bold text-3xl  sm:text-[39px]">
+        <div className="flex items-center justify-between">
+
+          <Link
+            to="/"
+            className="font-jakarta font-semibold text-[28px] sm:text-[30px] tracking-tight text-black"
+          >
             Shayandesigns
-          </a>
+          </Link>
 
 
-          <ul className="hidden md:flex items-center gap-[46px] font-nav text-[18px] lg:text-[25px] text-zinc-900">
-            <li><Link to={'/'}>Home</Link></li>
-            <li><a href="#" className="hover:text-zinc-900">Portfolio</a></li>
-            <li><a href="#" className="hover:text-zinc-900">About</a></li>
-            <li><a href="#" className="hover:text-zinc-900">Contact</a></li>
-          </ul>
+         
 
-          {/* Desktop Button */}
-          <div className="hidden md:block">
-            <Button className="text-[16px] lg:text-[20px]">Let’s Connect</Button>
+          <div className="hidden md:flex items-center gap-10">
+             <nav className="hidden md:flex items-center  gap-10 font-jakarta text-[16px] lg:text-[21px] text-black">
+            <Link to="/" className="hover:opacity-80  font-jakarta">Home</Link>
+            <Link to="/portfolio" className="hover:opacity-80">Portfolio</Link>
+            <Link to="/about" className="hover:opacity-80">About</Link>
+            <Link to="/contact" className="hover:opacity-80">Contact</Link>
+          </nav>
+            <Button
+              className="bg-black text-white text-sm lg:text-base px-6 py-3 rounded-full hover:bg-neutral-800 transition-all"
+  
+            >
+              Download Resume
+            </Button>
+
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition-all"
+              aria-label="Toggle Dark Mode"
+            >
+              <FaMoon size={16} />
+            </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden ">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle Menu">
-              {isMenuOpen ? <HiX size={32} /> : <HiMenu size={32} />}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle Menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              className="focus:outline-none"
+            >
+              {isMenuOpen ? <HiX size={28} /> : <HiMenu size={28} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Nav Menu - with animation */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? 'max-h-[500px] opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+          id="mobile-menu"
+          className={`md:hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? "max-h-[500px] mt-4" : "max-h-0 overflow-hidden"
           }`}
         >
-          <div className="mt-4 space-y-4 font-nav text-[20px] text-zinc-800">
-            <a href="#" className="block hover:text-zinc-900">Home</a>
-            <a href="#" className="block hover:text-zinc-900">Portfolio</a>
-            <a href="#" className="block hover:text-zinc-900">About</a>
-            <a href="#" className="block hover:text-zinc-900">Contact</a>
-            <Button className="text-[18px] w-full">Let’s Connect</Button>
+          <div className="flex flex-col space-y-4 font-jakarta text-[18px] px-4">
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
+            <Link to="/portfolio" onClick={() => setIsMenuOpen(false)}>Portfolio</Link>
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+            <Button
+              className="bg-black text-white text-base px-6 py-3 rounded-full"
+              onClick={() => {
+                setIsMenuOpen(false);
+              }}
+            >
+              Download Resume
+            </Button>
           </div>
         </div>
       </SectionWrapper>

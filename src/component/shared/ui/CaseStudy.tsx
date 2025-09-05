@@ -1,77 +1,60 @@
-import Button from "./Button";
+import React from 'react';
+import Button from './Button';
+import SectionWrapper from './SectionWrapper';
 
-type CaseStudyProps = {
-  imageUrl: string;
-  alt?: string;
-  quote: string;
-  author: string;
-  role: string;
+// ProjectCardProps
+type ProjectCardProps = {
   title: string;
   description: string;
-  buttonText: string;
+  imageUrl: string;
+  testimonial: string;
+  author: string;
+  avatarUrl?: string; 
+  link: string;
   className?: string;
-  isMobile?: boolean;
-    hideText?: boolean;
 };
 
-const CaseStudy: React.FC<CaseStudyProps> = ({
-  imageUrl,
-  alt = "Case study image",
-  quote,
-  author,
-  role,
+const ProjectCard: React.FC<ProjectCardProps> = ({
   title,
   description,
-  buttonText,
-  className = "",
-  isMobile = false,
+  imageUrl,
+ 
 
 }) => {
   return (
-    <div
-      className={`bg-zinc-50 rounded-[40px] px-6 py-8 sm:px-8 md:px-12 lg:px-16 shadow-sm ${className}`}
-      style={{ width: "100%", maxWidth: 1100 }}
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-        {/* LEFT SECTION */}
-        <div className="flex flex-col justify-between h-full">
-          {/* Quote Box */}
-          <div className="bg-white rounded-xl shadow-md p-6 max-w-md w-full mx-auto lg:mx-0">
-            <p className="text-zinc-900 text-[18px] sm:text-[22px] md:text-[25px] font-perah leading-relaxed font-semibold">
-              “{quote}”
-            </p>
-            <p className="text-zinc-600 text-sm sm:text-base mt-3">
-              {author}, {role}
-            </p>
-          </div>
+<SectionWrapper>
+ <div className="bg-white rounded-[36px] flex flex-col md:flex-row justify-between items-center max-w-[1407px] h-[700px] mx-auto overflow-hidden shadow-md">
+      
+      {/* Left Content With Padding */}
+      <div className="flex flex-col justify-between h-full items-start max-w-[630px] py-20 px-10 md:p-20 font-jakarta">
+        <div className="space-y-6">
+          <h3 className="text-[35px]  font-jakarta leading-[36px] font-bold text-black">
+            {title}
+          </h3>
 
-          {/* Title, Description, CTA */}
-          <div className="mt-6 text-center lg:text-left">
-            <h3 className="text-zinc-800 text-[22px] sm:text-[26px] md:text-[28px] font-heading mb-2">
-              {title}
-            </h3>
-            <p className="text-zinc-600 text-[16px] sm:text-[18px] md:text-[20px] max-w-lg mx-auto lg:mx-0 mb-6 leading-relaxed">
-              {description}
-            </p>
-            <Button className="rounded-full px-6 py-3 text-base hover:underline transition-all">
-              {buttonText}
-            </Button>
-          </div>
+          <p className="text-[24px] font-jakarta   leading-[31px] text-gray-500">
+          {description}
+          </p>
         </div>
 
-        {/* RIGHT IMAGE */}
-        <div className="flex items-center justify-center mt-8 lg:mt-0">
-         <img
-  src={imageUrl}
-  alt={alt}
-  className={`w-full max-w-[500px] sm:max-w-[600px] md:max-w-[700px] object-cover rounded-xl shadow-sm ${
-    isMobile ? "h-[250px]" : "h-[350px] sm:h-[450px] md:h-[550px]"
-  }`}
-/>
-        </div>
+        <Button className="mt-10 px-8 py-4 text-[16px] text-white bg-black rounded-full">
+          Password Protected
+        </Button>
+      </div>
+
+      {/* Image - No Padding, Flush to the Side */}
+      <div className="md:block border-none">
+        <img
+          src={imageUrl}
+          alt="eLearning App"
+          className="w-[700px] h-[700px] object-cover"
+        />
       </div>
     </div>
+       
+</SectionWrapper>
+   
   );
 };
 
-export default CaseStudy;
+export default ProjectCard;
